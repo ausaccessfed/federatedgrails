@@ -15,7 +15,7 @@ grails.project.dependency.resolution = {
         grailsCentral()
     }
     dependencies {
-      runtime "org.grails.plugins:shiro:1.1.3"
+      compile "org.grails.plugins:shiro:1.1.3"
     }
     plugins {
       test ":spock:0.6"
