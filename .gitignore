@@ -12,9 +12,10 @@ fr.sublime-workspace
 stacktrace.log
 test/reports
 web-app
-target
+target/*
 grails-app/i18n
 grails-app/realms
 *.war
+*.zip
 *DB*
 
