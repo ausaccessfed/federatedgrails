@@ -1,8 +1,10 @@
-# FederatedGrails - 0.2
+# Federated Grails
 
-Allows Grails applications to easily integrate to federated authentication sources particuarly those served by Shibboleth service providers.
+For application developers Federated environments can be somewhat daunting and complex.
 
-Utilizes Apache Shiro as an underlying mechanism so serves managing access control requirements equally as well. I recommend you read the Shiro documentation before continuing to get a feel for how this plugin operates - http://www.grails.org/plugin/shiro
+By using this plugin Grails applications (particuarly those protected by Shibboleth service providers http://shibboleth.net/products/service-provider.html) can easily integrate into federated authentication.
+
+The plugin utilizes Apache Shiro as an underlying mechanism so serves managing access control requirements equally as well. I recommend you read the Shiro documentation before continuing to get a feel for how this plugin operates - http://www.grails.org/plugin/shiro
 
 Concepts
 --------

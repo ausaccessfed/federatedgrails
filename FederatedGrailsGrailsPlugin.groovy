@@ -17,10 +17,13 @@ class FederatedGrailsGrailsPlugin {
 
     def author = "Bradley Beddoes"
     def authorEmail = "bradleybeddoes@gmail.com"
-    def title = "Integrates Shibboleth Service Provider (Apache) into Shiro and Grails for federated applications."
+    def title = "Allows Grails applications, particuarly those protected by Shibboleth service providers, to easily integrate into federated authentication."
     def description = ''' \
-For application developers Federated environments can be somewhat daunting and complex. This plugin aim to ease the usage of Shibboleth SP software (http://www.shibboleth.net) with Grails applications. The plugin utilizes Shiro
-as its internal authentication and access control layer.
+For application developers Federated environments can be somewhat daunting and complex. 
+
+This plugin allows Grails applications (particuarly those protected by Shibboleth service providers [http://shibboleth.net/products/service-provider.html] ) to easily integrate into federated authentication.
+
+The plugin utilizes Shiro as its internal authentication and access control layer.
 '''
 
     def documentation = "http://wiki.aaf.edu.au/tech-info/development-libraries-and-guides"
