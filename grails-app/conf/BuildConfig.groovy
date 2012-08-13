@@ -3,7 +3,9 @@ grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 
 grails.project.dependency.resolution = {
-  inherits("global") {}
+  inherits("global") {    
+    excludes 'shiro-cas'
+  }
 
   log "warn"
   checksums true
@@ -27,7 +29,7 @@ grails.project.dependency.resolution = {
   plugins {
     build ":release:2.0.4"
 
-    compile ":shiro:1.1.4"
+    compile ":shiro:1.1.3"
 
     runtime ":hibernate:$grailsVersion"
 
