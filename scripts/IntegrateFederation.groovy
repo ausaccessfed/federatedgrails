@@ -38,17 +38,17 @@ target ( default : 'Sets up a new project with a common federated base environme
   new File("${basedir}/grails-app/conf/SecurityFilters.groovy").write(securitytemplate.toString())
 
   // Realms
-  copy( todir: "${basedir}/grails-app/realms" , overwrite: false ) { fileset ( dir : "${federatedGrailsPluginDir}/injected-src/realms" ) }
+  copy( todir: "${basedir}/grails-app/realms" , overwrite: false ) { fileset ( dir : "${federatedGrailsPluginDir}/src/injected-src/realms" ) }
 
   // Controllers
-  copy( todir: "${basedir}/grails-app/controllers" , overwrite: false ) { fileset ( dir : "${federatedGrailsPluginDir}/injected-src/controllers" ) }
+  copy( todir: "${basedir}/grails-app/controllers" , overwrite: false ) { fileset ( dir : "${federatedGrailsPluginDir}/src/injected-src/controllers" ) }
 
   // Domain Objects
   mkdir(dir:"${basedir}/grails-app/domain/${packdir}")
   new File("${basedir}/grails-app/domain/${packdir}/${subject}.groovy").write(subjecttemplate.toString())
 
   // Views
-  copy( todir: "${basedir}/grails-app/views/auth" , overwrite: false ) { fileset ( dir : "${federatedGrailsPluginDir}/injected-src/views/auth" ) }
+  copy( todir: "${basedir}/grails-app/views/auth" , overwrite: false ) { fileset ( dir : "${federatedGrailsPluginDir}/src/injected-src/views/auth" ) }
 }
 
 def parseArgs() {
