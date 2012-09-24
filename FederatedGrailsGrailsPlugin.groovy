@@ -1,24 +1,23 @@
 
-import grails.util.GrailsUtil
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
 import org.apache.shiro.SecurityUtils
 import grails.plugins.federatedgrails.SubjectBase
 
 class FederatedGrailsGrailsPlugin {
-    def observe = ['controllers', 'services', 'filters'] 
-    def version = "0.3"
-    def grailsVersion = "2.0.0 > *"
-    def dependsOn = [shiro:"1.1.3"]
+  def observe = ['controllers', 'services', 'filters'] 
+  def version = "0.3.1"
+  def grailsVersion = "2.0.0 > *"
+  def dependsOn = [shiro:"1.1.3"]
 
-    def pluginExcludes = [
-      "grails-app/views/error.gsp"
-    ]
+  def pluginExcludes = [
+    "grails-app/views/error.gsp"
+  ]
 
-    def author = "Bradley Beddoes"
-    def authorEmail = "bradleybeddoes@gmail.com"
-    def title = "Allows Grails applications, particuarly those protected by Shibboleth service providers, to easily integrate into federated authentication."
-    def description = ''' \
+  def author = "Bradley Beddoes"
+  def authorEmail = "bradleybeddoes@gmail.com"
+  def title = "Allows Grails applications, particuarly those protected by Shibboleth service providers, to easily integrate into federated authentication."
+  def description = ''' \
 For application developers Federated environments can be somewhat daunting and complex. 
 
 This plugin allows Grails applications (particuarly those protected by Shibboleth service providers [http://shibboleth.net/products/service-provider.html] ) to easily integrate into federated authentication.
@@ -26,42 +25,42 @@ This plugin allows Grails applications (particuarly those protected by Shibbolet
 The plugin utilizes Shiro as its internal authentication and access control layer.
 '''
 
-    def documentation = "http://wiki.aaf.edu.au/tech-info/development-libraries-and-guides"
+  def documentation = "http://wiki.aaf.edu.au/tech-info/development-libraries-and-guides"
 
-    def doWithWebDescriptor = { xml ->
-    }
+  def doWithWebDescriptor = { xml ->
+  }
 
-    def doWithSpring = {
+  def doWithSpring = {
     loadFederatedConfig(application, log)
+  }
+
+  def doWithDynamicMethods = { ctx ->
+    // Supply authenticated subject to filters
+    application.filtersClasses.each { filter ->
+      // Should be used after verified call to 'accessControl' 
+      injectAuthn(filter.clazz, application)      
     }
 
-    def doWithDynamicMethods = { ctx ->
-      // Supply authenticated subject to filters
-      application.filtersClasses.each { filter ->
-        // Should be used after verified call to 'accessControl' 
-        injectAuthn(filter.clazz, application)      
-      }
-
-      // Supply authenticated subject to controllers
-      application.controllerClasses?.each { controller ->
-        injectAuthn(controller.clazz, application)
-      }
-
-      // Supply authenticated subject to services
-      application.serviceClasses?.each { service ->
-        injectAuthn(service.clazz, application)
-      }
+    // Supply authenticated subject to controllers
+    application.controllerClasses?.each { controller ->
+      injectAuthn(controller.clazz, application)
     }
 
-    def doWithApplicationContext = { applicationContext ->
+    // Supply authenticated subject to services
+    application.serviceClasses?.each { service ->
+      injectAuthn(service.clazz, application)
     }
+  }
 
-    def onChange = { event ->
-      injectAuthn(event.source, event.application)
-    }
+  def doWithApplicationContext = { applicationContext ->
+  }
 
-    def onConfigChange = { event ->
-    }
+  def onChange = { event ->
+    injectAuthn(event.source, event.application)
+  }
+
+  def onConfigChange = { event ->
+  }
 
   // Supplies the authenticated subject object
   private void injectAuthn(def clazz, GrailsApplication grailsApplication) {
