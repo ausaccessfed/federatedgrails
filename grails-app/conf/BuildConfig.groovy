@@ -33,6 +33,8 @@ grails.project.dependency.resolution = {
 
     runtime ":hibernate:$grailsVersion"
 
-    test ":spock:0.6"
+    test(":spock:0.7") {
+      exclude "spock-grails-support"
+    }
   }
 }

@@ -1,7 +1,8 @@
 package grails.plugins.federatedgrails
 
 class SubjectBase {    
-
+  static auditable = true
+  
   String principal
   boolean enabled
   
