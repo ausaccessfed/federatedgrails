@@ -8,7 +8,6 @@ class FederatedGrailsGrailsPlugin {
   def observe = ['controllers', 'services', 'filters']
   def version = "0.5.1"
   def grailsVersion = "2.2.4 > *"
-  def dependsOn = [shiro:"1.1.3 > *"]
 
   def pluginExcludes = [
     "grails-app/views/error.gsp"
