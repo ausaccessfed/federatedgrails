@@ -31,7 +31,7 @@ class InstanceGeneratorSpec extends UnitSpec {
     subject instanceof SubjectBase
   }
 
-  def 'InstanceGenerator throws RuntimeException when invalid class set'() {
+  def 'InstanceGenerator throws Exception when invalid class set'() {
     setup:
     mockConfig '''
       federation.app.subject = 'grails.plugins.federatedgrails.NullSubject'
@@ -41,6 +41,6 @@ class InstanceGeneratorSpec extends UnitSpec {
     def subject = InstanceGenerator.subject()
 
     then:
-    RuntimeException e = thrown()
+    ClassNotFoundException e = thrown()
   }
 }

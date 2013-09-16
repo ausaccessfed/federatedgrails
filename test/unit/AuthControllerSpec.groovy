@@ -6,6 +6,7 @@ import org.apache.shiro.authc.DisabledAccountException
 import org.apache.shiro.authc.IncorrectCredentialsException
 import org.apache.shiro.subject.Subject
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
+import org.codehaus.groovy.grails.commons.DefaultGrailsApplication
 
 import spock.lang.Shared
 
@@ -28,7 +29,7 @@ class AuthControllerSpec extends ControllerSpec {
         ssoendpoint = "/Shibboleth.sso/Login"
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
 
     controller.metaClass.createLink = { attrs ->
       linkAction = attrs.action
@@ -57,7 +58,7 @@ class AuthControllerSpec extends ControllerSpec {
         ssoendpoint = "/Shibboleth.sso/Login"
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
 
     controller.metaClass.createLink = { attrs ->
       linkAction = attrs.action
@@ -99,7 +100,7 @@ class AuthControllerSpec extends ControllerSpec {
         request.attributes = true
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+	 controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
 
     mockRequest.setAttribute('Shib-Entity-ID', 'http://test.com/idpshibboleth')
     mockRequest.setAttribute('displayName', 'Joe Bloggs')
@@ -119,7 +120,7 @@ class AuthControllerSpec extends ControllerSpec {
         request.attributes = false
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+	 controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
 
     mockRequest.addHeader('Shib-Entity-ID', 'http://test.com/idpshibboleth')
     mockRequest.addHeader('displayName', 'Joe Bloggs')
@@ -140,7 +141,7 @@ class AuthControllerSpec extends ControllerSpec {
         developmentactive = false
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+	 controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
 
     when:
     controller.federatedlogin()
@@ -166,7 +167,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+	 controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
 
     when:
     controller.federatedlogin()
@@ -192,7 +193,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     mockRequest.setAttribute('persistent-id', 'http://test.com!http://sp.test.com!1234')
 
     when:
@@ -220,7 +221,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     mockRequest.setAttribute('persistent-id', 'http://test.com!http://sp.test.com!1234')
     mockRequest.setAttribute('Shib-Session-ID', '1234-mockid-5678')
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
@@ -256,7 +257,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     mockRequest.setAttribute('persistent-id', 'http://test.com!http://sp.test.com!1234')
     mockRequest.setAttribute('Shib-Session-ID', '1234-mockid-5678')
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
@@ -294,7 +295,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     mockRequest.setAttribute('persistent-id', 'http://test.com!http://sp.test.com!1234')
     mockRequest.setAttribute('Shib-Session-ID', '1234-mockid-5678')
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
@@ -329,7 +330,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     mockRequest.setAttribute('persistent-id', 'http://test.com!http://sp.test.com!1234')
     mockRequest.setAttribute('Shib-Session-ID', '1234-mockid-5678')
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
@@ -364,7 +365,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     mockRequest.setAttribute('persistent-id', 'http://test.com!http://sp.test.com!1234')
     mockRequest.setAttribute('Shib-Session-ID', '1234-mockid-5678')
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
@@ -392,7 +393,7 @@ class AuthControllerSpec extends ControllerSpec {
         developmentactive = false
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+	 controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
 
     when:
     controller.locallogin()
@@ -418,7 +419,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+	 controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
 
     when:
     controller.locallogin()
@@ -444,7 +445,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     controller.params.principal = 'http://test.com!http://sp.test.com!1234'
 
     when:
@@ -472,7 +473,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     controller.params.principal = 'http://test.com!http://sp.test.com!1234'
     controller.params.credential = '1234-mockid-5678'
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
@@ -508,7 +509,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     controller.params.principal = 'http://test.com!http://sp.test.com!1234'
     controller.params.credential = '1234-mockid-5678'
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
@@ -546,7 +547,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     controller.params.principal = 'http://test.com!http://sp.test.com!1234'
     controller.params.credential = '1234-mockid-5678'
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
@@ -581,7 +582,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     controller.params.principal = 'http://test.com!http://sp.test.com!1234'
     controller.params.credential = '1234-mockid-5678'
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
@@ -614,7 +615,7 @@ class AuthControllerSpec extends ControllerSpec {
         }
       }
     '''
-    controller.metaClass.getGrailsApplication = { -> [config: ConfigurationHolder.config]}
+    controller.grailsApplication = new DefaultGrailsApplication(config: ConfigurationHolder.config)
     controller.params.principal = 'http://test.com!http://sp.test.com!1234'
     controller.params.credential = '1234-mockid-5678'
     mockRequest.addHeader("User-Agent", "Google Chrome X.Y")
