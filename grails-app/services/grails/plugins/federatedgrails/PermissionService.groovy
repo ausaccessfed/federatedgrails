@@ -7,7 +7,7 @@ package grails.plugins.federatedgrails
  */
 class PermissionService {
 
-  boolean transactional = true
+  static transactional = true
 
   /**
    * Assigns a permission object to an owner and performs checks to ensure permission is correctly applied
@@ -16,7 +16,7 @@ class PermissionService {
    * @param owner An object that extends PermissionOwner (e.g. Subject, Group, Role)
    *
    * @return A permission object. The saved object is all was successful or the permission object with error details if persistence fails.
-   * 
+   *
    * @throws RuntimeException if an unrecoverable/unexpected error occurs (Rolls back transaction)
    */
   def createPermission(permission, owner) {
@@ -55,7 +55,7 @@ class PermissionService {
    *
    * @throws RuntimeException if an unrecoverable/unexpected error occurs (Rolls back transaction)
    */
-  def deletePermission(permission) {
+  void deletePermission(permission) {
     def owner = permission.owner
 
     owner.removeFromPermissions(permission)
@@ -70,7 +70,7 @@ class PermissionService {
       throw new RuntimeException("Unable to remove permission $savedPermission.id from subject [$owner.id]$owner.name")
     }
 
-    permission.delete();
+    permission.delete()
     log.info("Successfully removed permission $permission.id from owner $owner.id")
   }
 

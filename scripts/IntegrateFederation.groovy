@@ -4,7 +4,7 @@ includeTargets << grailsScript("_GrailsArgParsing")
 
 USAGE = """
 AAF/SAML integration for Grails and Shiro Applications.
-  
+
 Usage:
     integrate-federation PKG SUBJECT
 
@@ -16,15 +16,15 @@ e.g:
     grails integrate-federation au.edu.myuni.appname Subject
 """
 
-target ( default : 'Sets up a new project with a common federated base environment ready for customization' ) {
-  
+target (integrateFederation: 'Sets up a new project with a common federated base environment ready for customization' ) {
+
   def subject, pack, packdir
   (pack, subject) = parseArgs()
   packdir = pack.replace('.', '/')
- 
-  def subjectbinding = [ 'pack':pack, 'subject':subject ]
-  def configbinding = [ 'pack':pack, 'subject':subject ]
-  def securitybinding = ['pack':pack, 'subject':subject]
+
+  def subjectbinding = [ pack:pack, subject:subject ]
+  def configbinding = [ pack:pack, subject:subject ]
+  def securitybinding = [pack:pack, subject:subject]
 
   def engine = new SimpleTemplateEngine()
   def subjecttemplate = engine.createTemplate(new FileReader("${federatedGrailsPluginDir}/src/templates/domain/Base.groovy")).make(subjectbinding)
@@ -34,8 +34,8 @@ target ( default : 'Sets up a new project with a common federated base environme
   echo("Customizing your application for federation integration...." )
 
   // Config
-  new File("${basedir}/grails-app/conf/FederationConfig.groovy").write(configtemplate.toString())
-  new File("${basedir}/grails-app/conf/SecurityFilters.groovy").write(securitytemplate.toString())
+  new File(basedir, "grails-app/conf/FederationConfig.groovy").write(configtemplate.toString())
+  new File(basedir, "grails-app/conf/SecurityFilters.groovy").write(securitytemplate.toString())
 
   // Realms
   copy( todir: "${basedir}/grails-app/realms" , overwrite: false ) { fileset ( dir : "${federatedGrailsPluginDir}/src/injected-src/realms" ) }
@@ -45,7 +45,7 @@ target ( default : 'Sets up a new project with a common federated base environme
 
   // Domain Objects
   mkdir(dir:"${basedir}/grails-app/domain/${packdir}")
-  new File("${basedir}/grails-app/domain/${packdir}/${subject}.groovy").write(subjecttemplate.toString())
+  new File(basedir, "grails-app/domain/${packdir}/${subject}.groovy").write(subjecttemplate.toString())
 
   // Views
   copy( todir: "${basedir}/grails-app/views/auth" , overwrite: false ) { fileset ( dir : "${federatedGrailsPluginDir}/src/injected-src/views/auth" ) }
@@ -69,3 +69,5 @@ private void usage() {
   println USAGE
   System.exit(1)
 }
+
+setDefaultTarget 'integrateFederation'

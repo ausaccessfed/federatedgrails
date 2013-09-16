@@ -1,21 +1,21 @@
 package grails.plugins.federatedgrails
 
-class SubjectBase {    
+class SubjectBase {
   static auditable = true
-  
+
   String principal
   boolean enabled
-  
-  static belongsTo = grails.plugins.federatedgrails.Role
 
-  static hasMany = [ 
-    sessionRecords: SessionRecord, 
-    roles: Role, 
-    permissions: Permission 
+  static belongsTo = Role
+
+  static hasMany = [
+    sessionRecords: SessionRecord,
+    roles: Role,
+    permissions: Permission
   ]
 
   static constraints = {
-    principal(nullable: false, blank: false, unique:true)
+    principal(blank: false, unique:true)
   }
 
 }

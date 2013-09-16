@@ -29,28 +29,28 @@ class Permission implements Serializable {
     static transients = [ "owner" ]
 
     static constraints = {
-        type(nullable: false, blank: false)
-        possibleActions(nullable: false, blank: false)
-        actions(nullable: false, blank: false)
-        target(nullable: false, blank: false)
+        type(blank: false)
+        possibleActions(blank: false)
+        actions(blank: false)
+        target(blank: false)
 
         subject(nullable:true)
         role(nullable:true)
     }
 
-    def setOwner (def owner) {
+    void setOwner(owner) {
         if (owner instanceof SubjectBase)
-        this.subject = owner
+        subject = owner
 
         if (owner instanceof Role)
-        this.role = owner
+        role = owner
     }
 
     def getOwner() {
-        if(this.subject != null)
+        if(subject != null)
         return subject
 
-        if(this.role != null)
+        if(role != null)
         return role
 
         return null
