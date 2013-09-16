@@ -1,5 +1,3 @@
-import org.apache.shiro.authz.permission.WildcardPermission
-
 import grails.plugins.federatedgrails.SubjectBase
 
 class DatabaseRealm {
@@ -29,20 +27,14 @@ class DatabaseRealm {
         return r.size() == roleNames.size()
     }
 
-    def isPermitted(principal, requiredPermission) {      
+    def isPermitted(principal, requiredPermission) {
       // Required permission directly applied to the subject
         def subject = SubjectBase.get(principal)
         def permissions = subject.permissions
 
         def permitted = permissions?.find { ps ->
             def perm = shiroPermissionResolver.resolvePermission(ps.target)
-
-            if (perm.implies(requiredPermission)) {
-                return true
-            }
-            else {
-                return false
-            }
+            return perm.implies(requiredPermission)
         }
 
         if (permitted != null) { return true }
@@ -52,16 +44,9 @@ class DatabaseRealm {
 
         permitted = results.find { ps ->
             def perm = shiroPermissionResolver.resolvePermission(ps.target)
-
-            if (perm.implies(requiredPermission)) {
-                return true
-            }
-            else {
-                return false
-            }
+            return perm.implies(requiredPermission)
         }
 
-        if (permitted != null) { return true }
-        else { return false }
+        return permitted != null
     }
 }

@@ -5,7 +5,7 @@ import org.apache.shiro.SecurityUtils
 import grails.plugins.federatedgrails.SubjectBase
 
 class FederatedGrailsGrailsPlugin {
-  def observe = ['controllers', 'services', 'filters'] 
+  def observe = ['controllers', 'services', 'filters']
   def version = "0.5.1"
   def grailsVersion = "2.2.4 > *"
   def dependsOn = [shiro:"1.1.3 > *"]
@@ -16,9 +16,9 @@ class FederatedGrailsGrailsPlugin {
 
   def author = "Bradley Beddoes"
   def authorEmail = "bradleybeddoes@gmail.com"
-  def title = "Allows Grails applications, particuarly those protected by Shibboleth service providers, to easily integrate into federated authentication."
+  def title = "Federated Grails plugin"
   def description = ''' \
-For application developers Federated environments can be somewhat daunting and complex. 
+For application developers Federated environments can be somewhat daunting and complex.
 
 This plugin allows Grails applications (particuarly those protected by Shibboleth service providers [http://shibboleth.net/products/service-provider.html] ) to easily integrate into federated authentication.
 
@@ -27,9 +27,6 @@ The plugin utilizes Shiro as its internal authentication and access control laye
 
   def documentation = "http://wiki.aaf.edu.au/tech-info/development-libraries-and-guides"
 
-  def doWithWebDescriptor = { xml ->
-  }
-
   def doWithSpring = {
     loadFederatedConfig(application, log)
   }
@@ -37,8 +34,8 @@ The plugin utilizes Shiro as its internal authentication and access control laye
   def doWithDynamicMethods = { ctx ->
     // Supply authenticated subject to filters
     application.filtersClasses.each { filter ->
-      // Should be used after verified call to 'accessControl' 
-      injectAuthn(filter.clazz, application)      
+      // Should be used after verified call to 'accessControl'
+      injectAuthn(filter.clazz, application)
     }
 
     // Supply authenticated subject to controllers
@@ -52,27 +49,19 @@ The plugin utilizes Shiro as its internal authentication and access control laye
     }
   }
 
-  def doWithApplicationContext = { applicationContext ->
-  }
-
   def onChange = { event ->
     injectAuthn(event.source, event.application)
   }
 
-  def onConfigChange = { event ->
-  }
-
   // Supplies the authenticated subject object
-  private void injectAuthn(def clazz, GrailsApplication grailsApplication) {
+  private void injectAuthn(clazz, GrailsApplication grailsApplication) {
     def config = grailsApplication.config
     GroovyClassLoader classLoader = new GroovyClassLoader(getClass().classLoader)
 
-    clazz.metaClass.getPrincipal = {
-      def subject = SecurityUtils.getSubject()
-    }
-      
-    clazz.metaClass.getSubject = {
-      def subject = null
+    clazz.metaClass.getPrincipal = { -> SecurityUtils.getSubject() }
+
+    clazz.metaClass.getSubject = { ->
+      def subject
       def principal = SecurityUtils.subject?.principal
 
       if(principal) {
@@ -89,9 +78,9 @@ The plugin utilizes Shiro as its internal authentication and access control laye
       }
     }
   }
-  
+
   // Allows federation configuration to be seperately maintained in client app
-  private ConfigObject loadFederatedConfig(GrailsApplication grailsApplication, def log) {
+  private ConfigObject loadFederatedConfig(GrailsApplication grailsApplication, log) {
     def config = grailsApplication.config
     GroovyClassLoader classLoader = new GroovyClassLoader(getClass().classLoader)
 
