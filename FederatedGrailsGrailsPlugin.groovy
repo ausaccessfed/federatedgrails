@@ -13,8 +13,6 @@ class FederatedGrailsGrailsPlugin {
     "grails-app/views/error.gsp"
   ]
 
-  def author = "Bradley Beddoes"
-  def authorEmail = "bradleybeddoes@gmail.com"
   def title = "Federated Grails plugin"
   def description = ''' \
 For application developers Federated environments can be somewhat daunting and complex.
@@ -25,6 +23,14 @@ The plugin utilizes Shiro as its internal authentication and access control laye
 '''
 
   def documentation = "http://wiki.aaf.edu.au/tech-info/development-libraries-and-guides"
+
+  def license = 'APACHE'
+  def developers = [[
+	  name: 'Bradley Beddoes', email: 'bradleybeddoes@gmail.com']
+  ]
+  def issueManagement = [system: 'GITHUB', url: 'https://github.com/ausaccessfed/federatedgrails/issues']
+  def scm = [url: 'https://github.com/ausaccessfed/federatedgrails']
+//  def organization = [ name: "My Company", url: "http://www.my-company.com/" ]
 
   def doWithSpring = {
     loadFederatedConfig(application, log)
