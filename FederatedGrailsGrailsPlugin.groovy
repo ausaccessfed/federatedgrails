@@ -6,7 +6,7 @@ import grails.plugins.federatedgrails.SubjectBase
 
 class FederatedGrailsGrailsPlugin {
   def observe = ['controllers', 'services', 'filters']
-  def version = "0.5.1"
+  def version = "0.6.0"
   def grailsVersion = "2.2.4 > *"
 
   def pluginExcludes = [
@@ -30,7 +30,6 @@ The plugin utilizes Shiro as its internal authentication and access control laye
   ]
   def issueManagement = [system: 'GITHUB', url: 'https://github.com/ausaccessfed/federatedgrails/issues']
   def scm = [url: 'https://github.com/ausaccessfed/federatedgrails']
-//  def organization = [ name: "My Company", url: "http://www.my-company.com/" ]
 
   def doWithSpring = {
     loadFederatedConfig(application, log)
