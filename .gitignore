@@ -18,4 +18,4 @@ grails-app/realms
 *.war
 *.zip
 *DB*
-
+plugin.xml

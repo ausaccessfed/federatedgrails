@@ -7,7 +7,7 @@ package grails.plugins.federatedgrails
  */
 class RoleService {
 
-  boolean transactional = true
+  static transactional = true
 
   /**
    * Creates a new role.
@@ -18,11 +18,8 @@ class RoleService {
    *
    * @throws RuntimeException When internal state requires transaction rollback
    */
-  def createRole(String name, String description, boolean protect) {
-    def role = new Role()
-    role.name = name
-    role.description = description
-    role.protect = protect
+  Role createRole(String name, String description, boolean protect) {
+    def role = new Role(name: name, description: description, protect: protect)
 
     if(!role.validate()) {
       log.debug("Supplied values for new role are invalid")
@@ -56,7 +53,7 @@ class RoleService {
    *
    * @throws RuntimeException When internal state requires transaction rollback
    */
-  def deleteRole(Role role) {
+  void deleteRole(Role role) {
 
     // Remove all subjects from this role
     def subjects = []
@@ -89,7 +86,7 @@ class RoleService {
    *
    * @throws RuntimeException When internal state requires transaction rollback
    */
-  def updateRole(Role role) {
+  Role updateRole(Role role) {
 
     def updatedRole = role.save()
     if (updatedRole) {
@@ -116,7 +113,7 @@ class RoleService {
    *
    * @throws RuntimeException When internal state requires transaction rollback
    */
-  def addMember(SubjectBase subject, Role role) {
+  void addMember(SubjectBase subject, Role role) {
     role.addToSubjects(subject)
     subject.addToRoles(role)
 
@@ -147,16 +144,16 @@ class RoleService {
 
   /**
    * Removes a role from a subject.
-   * 
+   *
    * @pre Passed role and subject object must have been validated to ensure
    * that hibernate does not auto persist the objects to the repository prior to service invocation
    *
    * @param subject The subject whole the referenced role should be removed from
    * @param role The role to be assigned
-   * 
+   *
    * @throws RuntimeException When internal state requires transaction rollback
    */
-  def deleteMember(SubjectBase subject, Role role) {
+  void deleteMember(SubjectBase subject, Role role) {
     role.removeFromSubjects(subject)
     subject.removeFromRoles(role)
 
